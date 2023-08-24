@@ -1,0 +1,317 @@
+LEARNING REACT 101
+
+[INSTALATION]
+
+FIRST OPEN ANY CLI tool u wanna use (ANY DISTRO WILL DO THE JOB DONE)
+
+ + Now install the NODE.js package manager. it includes the NPM which is the largest softwares registry  
+
+
+ + Pick which local development server u wanted to use in my case im using VITE as my main 
+ 
+ + if u dont have one just find something that suits u but i highly recommend using VITE since it was fast and reliable 
+
+ + and im pretty sure that u have VSCODE or any IDE's on you
+
+[PROCEEDING ON CREATING THE APP]
+
+1. Now we can now type the following code (use this if u have VITE already)
+
+[npm create vite@latest (name of your program)]
+
+ - then select react by pressing up and down to navigate
+
+ - after u sellect react u can choose between JS or  TS as your    languages
+
+
+[EXAMPLE CODES]
+
+//components can also be implemented in react
+//Props = it allows you to pass dynamic data throught react components
+//Props are just arguments that you pass to react components they are passed by an attribute 
+
+const Person =  (props) => {
+  return (
+   <>
+    <h1>Name: {props.name}</h1>
+    <h2>Last Name: {props.lastName}</h2>
+    <h2>Age: {props.Age}</h2>
+   </>
+  )
+}
+
+
+const App = () =>  {
+  const name = "Owen"
+  const itsShowing =  true;
+
+  return (
+    <div className="app">
+      <Person 
+      name = {'Lamaw'} 
+      lastName = {'Lmfao the chinese hacker'} 
+      Age = {'22'}/>
+
+      <Person 
+      name = {'Yawa'} 
+      lastName = {'SHEMANAY'} 
+      Age = {'33'}/>
+      
+      <Person 
+      name = {'CRINGE'} 
+      lastName = {'cocck'} 
+      Age = {'34'}/>
+    </div>
+  );
+}
+
+
+
+[INTRODUCTION TO STATES (WITH EXAMPLE)]
+
+[INCREMENT AND DECREMENT FUNCT]
+ [first state in the list is (usestate())]
+ 1. anything that uses the word use in react its a "Hook"
+ 2. the first argument in the square brackets is the name of the component
+ 3. the second argument is the setter function 
+ 
+
+import { useState } from 'react'
+
+const App = () =>  {
+
+ 
+  const [counter, setCounter] = useState(0);
+
+  return (
+   <>
+   <div className="app">
+    <button onClick={() => setCounter((prevCount) => prevCount - 1)}>DECREMENT</button>
+    <h1>{counter}</h1>
+    <button onClick={() => setCounter((prevCount => prevCount + 1))}>INCREMENT</button>
+   </div>
+   </>
+  );
+
+
+
+  [EVENTS]
+  - an action that could be triggered as a result of the user action or system           generated event. For example, a mouse click, loading of a web page, pressing a       key, window resizes, and other interactions are called events.
+
+  [CallBack function] 
+  - is the one the doesnt have a name just an empty function
+
+
+
+[NUMBER 1 RULE IN REACT]
+
+ - NEVER MODIFY STATE MANUALLY AND NEVER MUTATE THE STATE
+
+
+[IMPLEMENTING USE EFFECT ON INCREMENT AND DECREMENT FUNC]
+
+
+const App = () =>  {
+  
+  const [counter, setCounter] = useState(0);
+
+  [EVENTS] - is an action that we interact
+  [CallBack function] - is the one the doesnt have a name just an empty function*/
+
+  [USEEFFECT] - use effect allows us to do something on some kind of an effect or lets say on some kind of   an event 
+
+  [([]) Dependency array] - The dependency array is the second argument in the useEffect Hook and is used   to specify the variables the effect depends on
+
+  useEffect(() =>{
+     alert("value set to:" + counter);
+  }, [counter]);
+  
+  return (
+   <>
+   <div className="app">
+    <button onClick={() => setCounter((prevCount) => prevCount - 1)}>DECREMENT</button>
+    <h1>{counter}</h1>
+    <button onClick={() => setCounter((prevCount => prevCount + 1))}>INCREMENT</button>
+   </div>
+   </>
+  );
+}
+
+So, imagine you have a magic box called "App." Inside this magic box, there's a special number called "counter." Right now, the counter is at 0.
+
+Now, let's talk about some special actions and things:
+
+1. [EVENTS]: These are like little buttons we can press to make something happen. We have two buttons here: one is for making the number smaller (DECREMENT), and the other is for making the number bigger (INCREMENT).
+
+2. [CallBack function:] This is like a helper that helps us do something. It doesn't have a name, but it's always there to assist us.
+
+3. [USEEFFECT:] This is like a helper that waits for something to happen and then does something in response. It's like when you wait for your favorite cartoon to start on TV, and then you start watching.
+
+4. [([]) Dependency array:] This is like a list of things that the helper (USEEFFECT) needs to keep an eye on. If anything in this list changes, the helper will know and do its job.
+
+Now, let's see what's happening inside our magic box:
+
+1. When we click the DECREMENT button, the counter becomes a bit smaller.
+2. When we click the INCREMENT button, the counter becomes a bit bigger.
+
+But here's the cool part: Every time the counter changes, the helper (USEEFFECT) wakes up and says, "Hey, something changed! Let's celebrate!" Then, it shows a message that tells us what the counter's value is right now.
+
+So, in simple words, this magic box is like a game where we can make the number go up or down. And every time we change the number, a helper tells us what the number is. It's like having a friend who always tells you the score of the game you're playing!
+
+And that's what this special code does! 🚀
+
+
+
+
+
+
+
+[We created a movielist website using API]
+
+import { useState, useEffect } from 'react';
+
+import MovieCard from './MovieCard';
+import './app.css';
+import SearchIcon from './search.svg';
+
+//api key: dabd5e26
+
+//statick variable - string used to apply API 
+const API_URL = 'https://www.omdbapi.com?apikey=dabd5e26';
+
+const movie1 = {
+  "Title": "Spiderman in Cannes",
+  "Year": "2016",
+  "imdbID": "tt5978586",
+  "Type": "movie",
+  "Poster": "https://m.media-amazon.com/images/M/MV5BZDlmMGQwYmItNTNmOS00OTNkLTkxNTYtNDM3ZWVlMWUyZDIzXkEyXkFqcGdeQXVyMTA5Mzk5Mw@@._V1_SX300.jpg"
+}
+
+const App = () =>  {
+  //We need to map of all  our movies from the API so we can add more movies on our webpage
+  //We created a useState hook that stores all of the mapped data into one empty array.
+  const [movies, setMovies] = useState([]);
+  
+  //Now we are creating a function for search button. 
+  //First we need to create a useState hook that serves as a search function
+  //We pass a empty string to the function because we need to start with empty search string
+  const [searchTerm, setSearchTerm] = useState('');
+
+  //searchMovies() - was used to find/fetch movies using the API
+  //It simply allows us to write promises-based code as if it was synchronous and it checks that we are not breaking the execution thread. 
+  //We accept movie tittles using the searchMovies functionn
+  const searchMovies  = async (title) => {
+    //response - is a variable that fetches data from the API endpoint by using a template string
+    const response = await fetch(`${API_URL}&s=${title}`);
+    //after getting the response from the API endpoint we now need to get the data from the API
+    const data = await response.json();
+    //now we passed all of the mapped data to the setMovies array so we can use all of the values from the api
+    setMovies(data.Search);
+  }
+
+  useEffect(() => {
+    searchMovies('Superman');
+  }, [])
+
+
+  return (
+   <>
+   <div className="app">
+      <h1>MovieList</h1>
+
+      <div className="search">
+        <input 
+        /*We need to dynamicly change our searchterm*/
+
+        placeholder='Search for movies'
+        
+         
+        /*We set the value into searchTerm so for everytime we set an item in search bar it set into the input search box*/
+        value={searchTerm}
+
+        /*We set the onchange value into the event function so we can store all of the inputs inside the searchTerm variable then we proceed on implementing it on an event like a button so we can use the inputs to search movies*/
+        onchange = {(e) => setSearchTerm(e.target.value)}
+        />
+        <img src={SearchIcon} 
+        alt="search"
+        /*Now we call the searchMovies function and set it on an event which is the onclick so everytime we search something it will actually search something now.*/
+        /*We set it into the search term because every input that we type it will be stored inside the searchTerm variable*/
+        onClick={() => searchMovies(searchTerm)} 
+        />
+      </div>
+
+      {/*We created a ternary condition that if the data that has been mapped is empty 
+      we prompted with ("No movies found") but if the api fetched/found the data correctly 
+      it will  output all of the searched */}
+
+      {movies?.length > 0 
+         ? ( 
+        <div className="container">
+
+          {/*Heres the logic [
+            if movies.map fetched something from the API 
+            like for example you searched "Superman"
+            it will automatically turn it into a properties 
+            that can be implemented here at the main app page.
+          ]*/}
+
+         {movies.map((movie) => (<MovieCard movie={movie} />))}
+        </div>
+        ) : (
+          <div className="empty">
+            <h2>No movies found</h2>
+          </div>
+        )
+      }
+
+   </div>
+   </>
+  );
+}
+
+export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
